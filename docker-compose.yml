@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres_pass
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes: 
+      - db:/var/lib/postgresql/data
+      - ./configs/db/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+  pg-admin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "postgres@test.com"
+      PGADMIN_DEFAULT_PASSWORD: "postgres"
+    ports:
+      - "16543:80"
+    depends_on:
+      - postgres
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+#  ledn-api:
+#    build: ./ledn-api/
+#    depends_on:
+#      postgres:
+#        condition: service_healthy
+#    ports:
+#      - "8080:8080"
+volumes:
+  db:
+    driver: local
+  pgadmin:
