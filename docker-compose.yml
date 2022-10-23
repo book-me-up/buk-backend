@@ -13,9 +13,9 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    volumes: 
+    volumes:
       - db:/var/lib/postgresql/data
-      - ./configs/db/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
   pg-admin:
     image: dpage/pgadmin4
     environment:

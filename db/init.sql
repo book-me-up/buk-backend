@@ -29,3 +29,6 @@ CREATE TABLE appointment (
     CONSTRAINT fk_partner_id FOREIGN KEY(partner_id) REFERENCES partner(partner_id),
     CONSTRAINT fk_customer_id FOREIGN KEY(customer_id) REFERENCES customer(customer_id)
 );
+
+INSERT INTO partner (first_name, last_name, email, phone)
+VALUES ("Vanessa", "Nutricionista", "vanessa@gmail.com", "Sei n");
